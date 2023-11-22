@@ -4,7 +4,7 @@ This repo contains several Rust exercises to get familiar with the language.
 We assume you have theoretical knowledge from the lectures.
 If you have questions about these exercises, contact us (in Dutch or English) at alicia.andries@kuleuven.be and ruben.mechelinck@kuleuven.be.
 
-## Introduction & Setup (do this before the lab session)
+## Introduction & Setup
 First, some important background info:
 - a Rust project is called a "crate".
 - the Rust compiler is "rustc" (https://doc.rust-lang.org/rustc/index.html). We most often do not invoke the compiler directly, but instead rely on Cargo.
