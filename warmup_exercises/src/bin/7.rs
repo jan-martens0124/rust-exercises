@@ -1,12 +1,35 @@
 
-struct Student { /*some defining data elements of a student*/ }
+struct Student { 
+    /*some defining data elements of a student*/
+ }
 struct Teacher { /*some defining data elements of a teacher*/ }
+
+impl Hello for Student {
+    fn say_hi(&self) -> String {
+        "hi".to_string()
+    }
+    fn say_something(&self) -> String {
+        "I'm a good student".to_string()
+    }
+}
+
+impl Hello for Teacher {
+    fn say_hi(&self) -> String {
+        "Hi, I'm your new teacher".to_string()
+    }    
+    fn say_something(&self) -> String {
+        "I'm not a bad teacher".to_string()
+    }
+}
+    
 
 //TODO complete the trait definition and create implementations for the `Student` and `Teacher` type to make the code work
 trait Hello {
     fn say_hi(&self) -> String {
         String::from("hi")
     }
+
+    fn say_something(&self) -> String;
 
 }
 
