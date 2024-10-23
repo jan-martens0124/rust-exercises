@@ -117,4 +117,14 @@ pub fn main() {
         Ok(result) => println!("Result of expr5: {}", result),
         Err(e) => println!("Error: {}", e),
     }
+    // test if underflow is correclety handled
+    let expr6 = Expression::Op {
+        op: Operation::Sub,
+        left: Box::new(Expression::Value(i64::MIN)),
+        right: Box::new(Expression::Value(2)),
+    };
+    match eval(expr6) {
+        Ok(result) => println!("Result of expr6: {}", result),
+        Err(e) => println!("Error: {}", e),
+    }
 }
