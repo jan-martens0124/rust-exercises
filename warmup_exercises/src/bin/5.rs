@@ -1,6 +1,9 @@
 
 struct Package {
     //TODO implement this struct based on the rest of the code
+    sender_country: String,
+    recipient_country: String,
+    weight_in_grams: u32,
 }
 
 //info: structs contain data, but can also contain logic inside an `impl` block
@@ -22,12 +25,18 @@ impl Package {
     }
 
     //info: this function takes a (non-mutable) reference to self and can, therefore, access the instance itself
-    fn is_international(&self) -> ??? {
+    fn is_international(&self) -> bool {
         //TODO
+        if(self.sender_country == self.recipient_country){
+            return false;
+        }else{
+            return true;
+        }
     }
 
-    fn get_fees(&self, cents_per_gram: u32) -> ??? {
+    fn get_fees(&self, cents_per_gram: u32) -> u32 {
         //TODO 
+        self.weight_in_grams * cents_per_gram
     }
 }
 
@@ -35,9 +44,10 @@ pub fn main() {
     const CENTS_PER_GRAM: u32 = 3;
 
     //TODO create a package from Spain to Austria of 15 grams
-    let sender_country: String = 
-    let recipient_country: String = 
-    let package1 = //note: be sure to use the constructor function `new`
+    let sender_country: String = "Spain".to_string();
+    let recipient_country: String = "Austria".to_string();
+    //note: be sure to use the constructor function `new`
+    let package1 = Package::new(sender_country, recipient_country, 15);
     assert_eq!(package1.get_fees(CENTS_PER_GRAM), 45); 
     assert!(package1.is_international());
 
