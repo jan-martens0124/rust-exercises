@@ -11,34 +11,55 @@
 //Change `get_username` so it returns a `Result<String, MyError>` and handle the errors in `main` (an IOError should quit the program, but after an InvalidName error it should repeat the question to the user)
 //hint: have a look at `Result`s `or_else` function, and the `?` operator
 
+use std::f32::consts::E;
+use std::io;
+use std::io::BufRead;
+use std::io::Write;
 
+#[derive(Debug)]  // This will automatically implement the Debug trait for MyError
 enum MyError {
     InvalidName,
-    IOError(io::Error),
+    IOError(std::io::Error),
 }
 
-fn get_username() -> String {
+fn get_username() -> Result<String, MyError> {
     print!("Username: ");
-    io::stdout().flush();
+    io::stdout().flush(); //flush() is necessary because the print! macro does not automatically flush the output
 
     let mut input = String::new();
     io::stdin().lock().read_line(&mut input);
-    input = input.trim().to_string(); //have a look at the docs to see what `trim` does
+    input = input.trim().to_string(); //have a look at the docs to see what `trim` does --> removes leading and trailing whitespaces
 
     for c in input.chars() {
         if !char::is_alphabetic(c) {
+            return Err(MyError::InvalidName);
             panic!("that's not a valid name, try again");
         }
     }
 
     if input.is_empty() {
+        return Err(MyError::InvalidName);
         panic!("that's not a valid name, try again");
+        
     }
 
-    input
+    Ok(input)
+
 }
 
 fn main() {
-    let name = get_username();
-    println!("Hello {name}!")
+    let mut name = get_username();
+    
+    // Repeat asking for the username while the error is `MyError::InvalidName`
+    while let Err(MyError::InvalidName) = name {
+        println!("Invalid name, please try again.");
+        name = get_username();
+    }
+
+    // Check if we have a valid username
+    if let Ok(valid_name) = name {
+        println!("Hello {valid_name}!");
+    } else {
+        println!("An error occurred: {:?}", name.unwrap_err());
+    }
 }
